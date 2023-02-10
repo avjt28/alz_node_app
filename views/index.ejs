@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="manifest" href="../manifest.json">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-title" content="Faces">
+	<link rel="apple-touch-icon" href="../images/icons/apple-icon-57x57.png" sizes="57x57">
+	<link rel="apple-touch-icon" href="../images/icons/apple-icon-60x60.png" sizes="60x60">
+	<link rel="apple-touch-icon" href="../images/icons/apple-icon-72x72.png" sizes="72x72">
+	<link rel="apple-touch-icon" href="../images/icons/apple-icon-76x76.png" sizes="76x76">
+	<link rel="apple-touch-icon" href="../images/icons/apple-icon-114x114.png" sizes="114x114">
+	<link rel="apple-touch-icon" href="../images/icons/apple-icon-120x120.png" sizes="120x120">
+	<link rel="apple-touch-icon" href="../images/icons/apple-icon-144x144.png" sizes="144x144">
+	<link rel="apple-touch-icon" href="../images/icons/apple-icon-152x152.png" sizes="152x152">
+	<link rel="apple-touch-icon" href="../images/icons/apple-icon-180x180.png" sizes="180x180">
+
+	<meta name="msapplication-TileImage" content="../images/app-icon-144x144.png">
+	<meta name="msapplication-TileColor" content="#f5f5f5">
+	<meta name="theme-color" content="#2F80ED">
+  <script defer src="face-api.min.js"></script>
+  <script defer src="script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils@0.1/camera_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils@0.1/control_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils@0.2/drawing_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.1/hands.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-tflite@0.0.1-alpha.6/dist/tf-tflite.min.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"> </script> -->
+  <!-- Load the coco-ssd model. -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"> </script> 
+  <title>Face Recognition</title>
+  <script>
+    let friend_info = <%- JSON.stringify(friend_info) %>;
+    // console.log(friend_info);
+  </script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column
+    }
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    #canvasform{
+      position: relative;
+      top:0;
+      left:0;
+    }
+  </style>
+</head>
+<body>
+  <video id="video" width="224" height="224" autoplay></video>
+  <button id="click-photo">Recognise</button>
+  <br> </br>
+  <button id="add-photo">Add Photo</button>
+  <canvas id="canvasbg" width="224" height="224" hidden></canvas><br></br>
+  <form action="/upload" method="post" id="uploadBox" hidden>
+    <canvas id="canvasform" width="224" height="224"></canvas><br></br>
+    <input type="hidden" id="canvasimg" name="canvasimg">
+    <label for="name">Name: </label>
+    <input type="text" id="name" name="name"><br><br>
+    <button id="submit" type="submit">Submit</button>
+  </form>
+  <div style="visibility: hidden;" class="control">
+  </div>
+</body>
+<script>
+ 
+  if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('../sw.js', {
+      scope: '.' // <--- THIS BIT IS REQUIRED
+  }).then(function(registration) {
+      // Registration was successful
+      console.log('ServiceWorker registration successful with scope: ', registration.scope);
+  }, function(err) {
+      // registration failed :(
+      console.log('ServiceWorker registration failed: ', err);
+  });
+}
+</script>
+</html>
