@@ -4,7 +4,7 @@ the  app looks at the environment and detect objects and faces of different pers
 
 
 Used:
-Media Pipe
-Keypoint classifier
-Coco Ssd model for Object Detection
-face-api.js for facial recognition
+#Media Pipe
+#Keypoint classifier
+#Coco Ssd model for Object Detection
+#face-api.js for facial recognition
